@@ -1,0 +1,128 @@
+@import "./_size.scss";
+
+// Grid variables
+$grid-prefix: "grid";
+$grid-row: "row";
+$grid-column: "column";
+$grid-cell: "cell";
+$grid-offset: "offset";
+
+$grid-demo-cell: "demo";
+
+$grid-from: 1;
+$grid-to: 16;
+$grid-factor: 2;
+
+$grid-variations: (
+  (
+    "name": "wide",
+    "left-gutter": $size-grid-gutter * 3,
+    "right-gutter": $size-grid-gutter * 3,
+  ),
+  (
+    "name": "default",
+    "left-gutter": $size-grid-gutter,
+    "right-gutter": $size-grid-gutter,
+  ),
+  (
+    "name": "narrow",
+    "left-gutter": $size-grid-gutter / 2,
+    "right-gutter": $size-grid-gutter / 2,
+  ),
+  (
+    "name": "condensed",
+    "left-gutter": 0,
+    "right-gutter": 1px,
+  ),
+  (
+    "name": "edge-to-edge",
+    "left-gutter": 0,
+    "right-gutter": 0,
+  )
+);
+
+// Breakpoints definition
+$grid-breakpoints: (
+  (
+    "columns": $grid-to / 4,
+    "margin": 0,
+    "name": "small",
+  ),
+  (
+    "columns": $grid-to / 2,
+    "margin": $size-grid-margin,
+    "name": "medium",
+  ),
+  (
+    "columns": $grid-to,
+    "margin": $size-grid-margin,
+    "name": "large",
+  )
+);
+
+// Breakpoints calculation
+$i: 1;
+$max: length($grid-breakpoints);
+
+$calculated-breakpoints: ();
+
+@each $grid-breakpoint in $grid-breakpoints {
+  $breakpoint-margin: map-get($grid-breakpoint, "margin");
+  $breakpoint-columns: map-get($grid-breakpoint, "columns");
+
+  $breakpoint-min-width: $breakpoint-columns * ($size-grid-min-column-width) + 2 * $breakpoint-margin;
+
+  $breakpoint-target-width: $breakpoint-columns * ($size-grid-target-column-width) + 2 * $breakpoint-margin;
+
+  $breakpoint-max-width: $breakpoint-columns * ($size-grid-max-column-width) + 2 * $breakpoint-margin;
+
+  $breakpoint-map: map-merge(
+    $grid-breakpoint,
+    (
+      "target-width": $breakpoint-target-width,
+    )
+  );
+
+  @if $i > 1 {
+    $breakpoint-map: map-merge(
+      $breakpoint-map,
+      (
+        "min-width": $breakpoint-min-width,
+      )
+    );
+  }
+
+  @if $i < $max {
+    $breakpoint-map: map-merge(
+      $breakpoint-map,
+      (
+        "max-width": $breakpoint-max-width,
+      )
+    );
+  }
+
+  $i: $i + 1;
+
+  $calculated-breakpoints: append($calculated-breakpoints, $breakpoint-map);
+}
+
+$grid-breakpoints: ();
+
+$i: 1;
+
+@each $grid-breakpoint in $calculated-breakpoints {
+  $current-breakpoint-map: $grid-breakpoint;
+
+  @if $i < $max {
+    $current-breakpoint-map: map-merge(
+      $current-breakpoint-map,
+      (
+        "max-width": map-get(nth($calculated-breakpoints, $i + 1), "min-width"),
+      )
+    );
+  }
+
+  $i: $i + 1;
+
+  $grid-breakpoints: append($grid-breakpoints, $current-breakpoint-map);
+}

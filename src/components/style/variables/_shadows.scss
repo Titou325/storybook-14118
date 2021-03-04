@@ -1,0 +1,23 @@
+@import "./size.scss";
+
+@function diffuse-shadows($size, $color: rgba(0, 0, 0, 0.125), $multiply: false) {
+  $val: 0 1px 1px $color;
+  @for $i from 1 through $size {
+    @if $i % 2 == 0 {
+      @if $multiply == true {
+        $i: $i * 2;
+      }
+      $val: #{$val}, 0 #{$i}px #{$i}px #{$color};
+    }
+  }
+  @return $val;
+}
+
+$shadow-color: rgba($color-black, 0.025);
+
+$shadow-0: diffuse-shadows(0.25 * $size-base-unit / 1px, $shadow-color, true);
+$shadow-1: diffuse-shadows(0.5 * $size-base-unit / 1px, $shadow-color, true);
+$shadow-2: diffuse-shadows(1 * $size-base-unit / 1px, $shadow-color, true);
+$shadow-3: diffuse-shadows(2 * $size-base-unit / 1px, $shadow-color, true);
+$shadow-4: diffuse-shadows(4 * $size-base-unit / 1px, $shadow-color, true);
+$shadow-5: diffuse-shadows(8 * $size-base-unit / 1px, $shadow-color, true);

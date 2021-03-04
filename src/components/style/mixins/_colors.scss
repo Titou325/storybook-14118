@@ -1,0 +1,19 @@
+@import "../variables/_colors.scss";
+
+@mixin generateColorVariations($colors, $properties, $prefix) {
+  @each $color-name in map-keys($colors) {
+    #{$prefix}_#{$color-name} {
+      @each $property-name in map-keys($properties) {
+        $property: map-get($properties, $property-name);
+        #{$property-name}: map-get(
+          map-get(map-get($colors, $color-name), map-get($property, "shade")),
+          map-get($property, "type")
+        );
+      }
+    }
+  }
+}
+
+@mixin intentColorVariations($properties, $prefix) {
+  @include generateColorVariations(map-get($full-color-map, "intent"), $properties, $prefix);
+}

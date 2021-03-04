@@ -1,0 +1,7 @@
+@import "./style.scss";
+
+:export {
+  global-color-map: json-encode($full-color-map);
+  global-breakpoints: json-encode($grid-breakpoints);
+  global-graph: json-encode($chart);
+}

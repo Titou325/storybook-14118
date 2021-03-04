@@ -1,0 +1,21 @@
+@import "../style/style.scss";
+
+.text-skeleton {
+  position: relative;
+}
+
+.text-skeleton-line {
+  @include skeleton();
+  @include no-select();
+
+  height: 0.9em;
+  display: inline-block;
+
+  &.text-skeleton-line_block {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &.text-skeleton-line_inline {
+  }
+}

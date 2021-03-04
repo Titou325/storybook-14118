@@ -1,0 +1,33 @@
+@keyframes skeleton {
+  0% {
+    transform: translateX(-80%) scaleX(0.6);
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(110%) scaleX(1.2);
+    opacity: 0.6;
+  }
+}
+
+@mixin skeleton {
+  position: relative;
+  background-color: $color-skeleton-background !important;
+  color: transparent !important;
+  cursor: default !important;
+
+  overflow: hidden;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    background-color: $color-skeleton-foreground;
+    animation: skeleton 1.5s ease-in-out infinite;
+  }
+}

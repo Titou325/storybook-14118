@@ -1,0 +1,141 @@
+@import "../variables/_size.scss";
+@import "../variables/_grid.scss";
+
+@import "../variables/_colors.scss";
+
+@function getMediaQuery($breakpoint) {
+  @if (map-has-key($breakpoint, "min-width") and map-has-key($breakpoint, "max-width")) {
+    @return "(min-width: " + map-get($breakpoint, "min-width") + ") and (max-width: " +
+      map-get($breakpoint, "max-width") + ")";
+  } @else if (map-has-key($breakpoint, "max-width")) {
+    @return "(max-width: " + map-get($breakpoint, "max-width") + ")";
+  } @else {
+    @return "(min-width: " + map-get($breakpoint, "min-width") + ")";
+  }
+}
+
+// General helpers
+.#{$grid-prefix} {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
+  &.#{$grid-prefix}_no-margin {
+    margin: 0 !important;
+  }
+}
+
+.#{$grid-prefix}-#{$grid-row} {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+
+  &.#{$grid-prefix}-#{$grid-row}_stretch {
+    align-items: stretch;
+  }
+
+  &.#{$grid-prefix}-#{$grid-row}_no-wrap {
+    flex-wrap: nowrap;
+  }
+
+  &.#{$grid-prefix}-#{$grid-row}_reverse {
+    flex-direction: row-reverse;
+  }
+}
+
+.#{$grid-prefix}-#{$grid-column} {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: $size-grid-min-column-width;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.#{$grid-prefix}-#{$grid-cell} {
+  display: flex;
+  flex-direction: column;
+
+  &.#{$grid-prefix}-#{$grid-cell}_stretch {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+// Demo styles
+.#{$grid-prefix}-#{$grid-demo-cell} {
+  padding: 1rem 0;
+}
+
+// Debug styles
+.#{$grid-prefix}_debug {
+  background-color: lighten($color-primary, 40%);
+
+  .#{$grid-prefix}-#{$grid-column} {
+    background-color: lighten($color-primary, 35%);
+    outline: 1px solid lighten($color-primary, 20%);
+  }
+
+  .#{$grid-prefix}-#{$grid-cell} {
+    background-color: lighten($color-primary, 35%);
+    outline: 1px solid lighten($color-primary, 20%);
+  }
+
+  .#{$grid-prefix}-#{$grid-demo-cell} {
+    background-color: lighten($color-primary, 40%);
+  }
+}
+
+//  Grid variations
+@each $grid-variation in $grid-variations {
+  .#{$grid-prefix}_#{map-get($grid-variation, "name")} {
+    &.#{$grid-prefix}-#{$grid-cell} {
+      padding-left: map-get($grid-variation, "left-gutter");
+      padding-right: map-get($grid-variation, "right-gutter");
+      padding-top: map-get($grid-variation, "left-gutter");
+      padding-bottom: map-get($grid-variation, "right-gutter");
+
+      & > .#{$grid-prefix} {
+        margin-left: -1 * map-get($grid-variation, "left-gutter");
+        margin-right: -1 * map-get($grid-variation, "right-gutter");
+      }
+
+      &.#{$grid-prefix}-#{$grid-cell}_no-vertical-padding {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+// Grid breakpoints
+@each $breakpoint in $grid-breakpoints {
+  @media #{getMediaQuery($breakpoint)} {
+    .#{$grid-prefix} {
+      margin: 0 map-get($breakpoint, "margin");
+    }
+
+    .#{$grid-prefix}-#{$grid-column}_#{map-get($breakpoint, "name")}_#{0} {
+      display: none !important;
+    }
+
+    // For each acceptable column width
+    @for $i from 1 through map-get($breakpoint, "columns") {
+      .#{$grid-prefix}-#{$grid-column}_#{map-get($breakpoint, "name")}_#{$i} {
+        flex-grow: 0;
+        flex-basis: $i / map-get($breakpoint, "columns") * 100%;
+      }
+
+      // Increment counter by grid factor
+      $i: $i * $grid-factor;
+    }
+
+    @for $j from 1 through (map-get($breakpoint, "columns") - 1) {
+      .#{$grid-prefix}-#{$grid-column}_#{map-get($breakpoint, "name")}_#{$grid-offset}_#{$j} {
+        margin-left: $j / map-get($breakpoint, "columns") * 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@import "./variables/_fonts.scss";
+@import "./variables/_colors.scss";
+@import "./variables/_shadows.scss";
+@import "./variables/_size.scss";
+@import "./variables/_grid.scss";
+@import "./variables/_layout.scss";
+@import "./variables/_navigation.scss";
+
+@import "./mixins/_utilities.scss";
+@import "./mixins/_colors.scss";
+@import "./mixins/_layout.scss";
+@import "./mixins/_skeleton.scss";
+
+body {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+}

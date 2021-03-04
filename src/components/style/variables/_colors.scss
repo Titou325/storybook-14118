@@ -1,0 +1,128 @@
+// Base colors
+// Brand colors
+$color-brand-1: scale-color(#3643cd, $lightness: 10%, $saturation: 40%);
+$color-brand-2: scale-color(#5345d4, $lightness: 10%, $saturation: 40%);
+$color-brand-3: scale-color(#7046da, $lightness: 10%, $saturation: 40%);
+$color-brand-4: scale-color(#8d48e1, $lightness: 10%, $saturation: 40%);
+$color-brand-5: scale-color(#aa49e7, $lightness: 10%, $saturation: 40%);
+
+// Intent colors
+$color-orange: #e59500;
+$color-red: #d72638;
+$color-green: #04a777;
+$color-blue: #53a2be;
+
+// grayscale
+$color-gray-1: #000000;
+$color-gray-2: #191919;
+$color-gray-3: #4c4c4c;
+$color-gray-4: #7f7f7f;
+$color-gray-5: #b2b2b2;
+$color-gray-6: #e5e5e5;
+$color-gray-7: #ffffff;
+
+// Color aliases
+$color-black: $color-gray-1;
+$color-white: $color-gray-7;
+
+$color-primary: $color-brand-1;
+$color-secondary: $color-gray-3;
+
+$color-intent-primary: $color-primary;
+$color-intent-secondary: $color-secondary;
+
+$color-intent-warning: $color-orange;
+$color-intent-danger: $color-red;
+$color-intent-success: $color-green;
+$color-intent-info: $color-blue;
+$color-intent-gray: lighten($color-gray-6, 5%);
+$color-intent-white: $color-white;
+$color-intent-black: $color-black;
+$color-intent-dark-gray: $color-gray-3;
+
+$color-skeleton-background: $color-gray-6;
+$color-skeleton-foreground: $color-gray-5;
+
+$color-disabled-text: $color-gray-4;
+$color-disabled-background: $color-gray-6;
+
+$color-text: $color-gray-3;
+
+// Color ramps
+// Color ramp
+@import "../functions/_colors.scss";
+
+$color-map: (
+  "brand": (
+    "1": $color-brand-1,
+    "2": $color-brand-2,
+    "3": $color-brand-3,
+    "4": $color-brand-4,
+    "5": $color-brand-5,
+  ),
+  "intent": (
+    "primary": $color-intent-primary,
+    "secondary": $color-intent-secondary,
+    "warning": $color-intent-warning,
+    "danger": $color-intent-danger,
+    "success": $color-intent-success,
+    "info": $color-intent-info,
+    "gray": $color-intent-gray,
+    "white": $color-intent-white,
+    "black": $color-intent-black,
+    "dark-gray": $color-intent-dark-gray,
+  ),
+  "color": (
+    "dark-blue": $color-brand-1,
+    "purple": $color-brand-5,
+    "orange": $color-orange,
+    "green": $color-green,
+    "red": $color-red,
+    "blue": $color-blue,
+    "black": $color-black,
+    "white": $color-white,
+    "light-gray": $color-gray-6,
+    "gray": $color-gray-4,
+    "dark-gray": $color-gray-2,
+  ),
+);
+
+$full-color-map: ();
+
+// Steps in each lightness direction (+/-)
+$color-scale-steps: 2;
+$color-scale-step-size: 10%;
+
+@each $color-type in map-keys($color-map) {
+  $color-type-map: ();
+  @each $color-name in map-keys(map-get($color-map, $color-type)) {
+    $current-color-map: ();
+    $color: map-get(map-get($color-map, $color-type), $color-name);
+    $color-ramp: get-color-ramp($color, $color-scale-steps, $color-scale-step-size);
+    @each $color-variation-name in map-keys($color-ramp) {
+      $color-variation: map-get($color-ramp, $color-variation-name);
+      $color-variation-with-metadata: get-color-metadata($color-variation, $color-white, $color-black);
+      $current-color-map: map-merge(
+        $current-color-map,
+        (
+          $color-variation-name: $color-variation-with-metadata,
+        )
+      );
+    }
+    $color-type-map: map-merge(
+      $color-type-map,
+      (
+        $color-name: $current-color-map,
+      )
+    );
+  }
+  $full-color-map: map-merge(
+    $full-color-map,
+    (
+      $color-type: $color-type-map,
+    )
+  );
+}
+
+// UI Colors
+$color-focus-outline: $color-primary;

@@ -1,0 +1,13 @@
+@mixin no-select() {
+  user-select: none;
+}
+
+@mixin no-focus-outline() {
+  outline: none;
+}
+
+@mixin focusOutline($color-focus-ring: $color-white) {
+  @include no-focus-outline();
+  box-shadow: inset 0 0 0 $size-focus-ring $color-focus-outline,
+    inset 0 0 0 ($size-focus-ring + $size-inner-focus-ring) $color-focus-ring;
+}

@@ -1,0 +1,32 @@
+@import "../variables/_size.scss";
+
+@import "../functions/_maths.scss";
+
+// REM Scale
+$scale-step-size: ($size-font-scale-max-breakpoint - $size-font-scale-min-breakpoint) / $size-font-scale-steps;
+$scale-step-font-size: ($size-font-scale-max-font-size - $size-font-scale-min-font-size) / $size-font-scale-steps;
+
+@for $i from 1 through $size-font-scale-steps {
+  $current-min-size: $size-font-scale-min-breakpoint + ($i - 1) * $scale-step-size;
+  $current-max-size: $size-font-scale-min-breakpoint + $i * $scale-step-size;
+  $current-font-size: $size-font-scale-min-font-size + ($i - 1) * $scale-step-font-size;
+  @if $i == 1 {
+    @media (max-width: $current-max-size) {
+      html {
+        font-size: $current-font-size;
+      }
+    }
+  } @else if $i == $size-font-scale-steps {
+    @media (min-width: $current-min-size) {
+      html {
+        font-size: $current-font-size;
+      }
+    }
+  } @else {
+    @media (min-width: $current-min-size) and (max-width: $current-max-size) {
+      html {
+        font-size: $current-font-size;
+      }
+    }
+  }
+}

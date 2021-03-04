@@ -1,0 +1,16 @@
+@import "~normalize.css";
+
+@import "./assets/fonts.scss";
+
+@import "./shared/_remscale.scss";
+@import "./shared/_typography.scss";
+
+html,
+body {
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

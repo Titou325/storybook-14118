@@ -1,0 +1,159 @@
+@import "./_fonts";
+@import "./_colors";
+
+$navigation-link-transition: 0s ease;
+
+$navigation-icon-size: 3 * $size-base-unit;
+
+$navigation-themes: (
+  (
+    name: "light",
+    main: (
+      background: $color-white,
+      color: $color-black,
+      hover-background: lighten($color-gray-6, 5%),
+      focus-background: $color-gray-6,
+      focus-color: $color-black,
+    ),
+    secondary: (
+      background: $color-white,
+      color: $color-black,
+      hover-background: lighten($color-gray-6, 5%),
+      focus-background: $color-gray-6,
+      focus-color: $color-black,
+      border-top-color: rgba($color-black, 0.1),
+    ),
+    core: (
+      box-shadow: true,
+      background: $color-white,
+    ),
+    dropdown: (
+      background: $color-gray-6,
+      color: $color-black,
+    ),
+  ),
+  (
+    name: "dark",
+    main: (
+      background: $color-black,
+      color: $color-white,
+      hover-background: mix($color-gray-3, $color-gray-2),
+      focus-background: $color-white,
+      focus-color: $color-black,
+    ),
+    secondary: (
+      background: $color-black,
+      color: $color-white,
+      hover-background: $color-gray-3,
+      focus-background: mix($color-gray-3, $color-gray-2),
+      focus-color: $color-white,
+      border-top-color: rgba($color-white, 0.2),
+    ),
+    core: (
+      box-shadow: true,
+      background: $color-black,
+    ),
+    dropdown: (
+      background: $color-white,
+      color: $color-black,
+    ),
+  ),
+  (
+    name: "primary",
+    main: (
+      background: $color-primary,
+      color: $color-white,
+      hover-background: darken($color-primary, 5%),
+      focus-background: $color-white,
+      focus-color: $color-black,
+    ),
+    secondary: (
+      background: $color-primary,
+      color: $color-white,
+      hover-background: darken($color-primary, 5%),
+      focus-background: darken($color-primary, 10%),
+      focus-color: $color-white,
+      border-top-color: rgba($color-white, 0.3),
+    ),
+    core: (
+      box-shadow: true,
+      background: $color-primary,
+    ),
+    dropdown: (
+      background: $color-white,
+      color: $color-black,
+    ),
+  ),
+  (
+    name: "transparent",
+    main: (
+      background: "transparent",
+      color: $color-white,
+      hover-background: rgba($color-gray-4, 0.4),
+      focus-background: $color-white,
+      focus-color: $color-black,
+    ),
+    secondary: (
+      background: transparent,
+      color: $color-white,
+      hover-background: rgba($color-gray-4, 0.4),
+      focus-background: $color-white,
+      focus-color: $color-black,
+      border-top-color: rgba($color-white, 0.3),
+    ),
+    core: (
+      background:
+        linear-gradient(
+          to bottom,
+          hsla(0, 0%, 0%, 0.77) 0%,
+          hsla(0, 0%, 0%, 0.76) 12.9%,
+          hsla(0, 0%, 0%, 0.733) 24.6%,
+          hsla(0, 0%, 0%, 0.69) 35.1%,
+          hsla(0, 0%, 0%, 0.635) 44.4%,
+          hsla(0, 0%, 0%, 0.57) 52.8%,
+          hsla(0, 0%, 0%, 0.499) 60.3%,
+          hsla(0, 0%, 0%, 0.423) 66.9%,
+          hsla(0, 0%, 0%, 0.347) 72.7%,
+          hsla(0, 0%, 0%, 0.271) 77.9%,
+          hsla(0, 0%, 0%, 0.2) 82.5%,
+          hsla(0, 0%, 0%, 0.135) 86.6%,
+          hsla(0, 0%, 0%, 0.08) 90.4%,
+          hsla(0, 0%, 0%, 0.037) 93.8%,
+          hsla(0, 0%, 0%, 0.01) 97%,
+          hsla(0, 0%, 0%, 0) 100%
+        ),
+    ),
+    dropdown: (
+      background: $color-white,
+      color: $color-black,
+    ),
+  )
+);
+
+$navigation-component-secondary: (
+  name: "secondary",
+  border-top: 1px,
+  link: (
+    height: $size-navigation-secondary,
+    line-height: $size-navigation-secondary-line-height,
+    font-size: $size-navigation-secondary-font-size,
+    font-weight: 400,
+    font-family: $font-work-sans,
+    active-border-size: 3px,
+  ),
+);
+
+$navigation-components: (
+  (
+    name: "main",
+    link: (
+      height: $size-navigation-main,
+      line-height: $size-navigation-main-line-height,
+      font-size: $size-navigation-main-font-size,
+      font-weight: 600,
+      font-family: $font-gilroy,
+      active-border-size: 4px,
+    ),
+  ),
+  $navigation-component-secondary
+);
